@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1020"/>
+      <stop offset="1" stop-color="#111A2E"/>
+    </linearGradient>
+    <radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(860 210) rotate(130) scale(520 520)">
+      <stop stop-color="#6B7FC0" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#6B7FC0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" rx="48" fill="url(#g)"/>
+  <rect width="1200" height="630" rx="48" fill="url(#r)"/>
+  <rect x="92" y="92" width="1016" height="446" rx="40" fill="#070A12" stroke="#2A3A61" stroke-width="3"/>
+  <g>
+    <rect x="152" y="182" width="110" height="110" rx="28" fill="#0B1020" stroke="#6B7FC0" stroke-width="3"/>
+    <path d="M185 230H230" stroke="#C7D0F2" stroke-width="8" stroke-linecap="round"/>
+    <path d="M185 254H218" stroke="#9BAAE0" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <text x="290" y="250" fill="#E9EDFF" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="56" font-weight="700">
+    AppSaga
+  </text>
+  <text x="290" y="310" fill="#C7D0F2" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="28" font-weight="500">
+    AppSaga Solutions
+  </text>
+  <text x="290" y="370" fill="#9BAAE0" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="22">
+    We build modern web products that scale.
+  </text>
+</svg>
+
+
