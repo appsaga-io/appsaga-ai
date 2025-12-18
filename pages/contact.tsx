@@ -20,7 +20,7 @@ type ContactResponse = { ok: true } | { ok: false; error: string };
 
 export default function ContactPage() {
   const interests = useMemo(
-    () => ["MVP in 2–3 weeks", "Website / Landing page", "AI integration", "Automation", "Other"],
+    () => ["MVP in 2–3 weeks", "Training (AI 360)", "Website / Landing page", "AI integration", "Automation", "Other"],
     []
   );
   const [form, setForm] = useState<ContactPayload>({

@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
+import { courses } from "@/lib/training";
 
-const PATHS = ["/", "/about", "/contact", "/blog", "/privacy", "/terms"];
+const PATHS = ["/", "/about", "/training", "/contact", "/blog", "/privacy", "/terms"];
 
 function getBaseUrl(req: Parameters<GetServerSideProps>[0]["req"]) {
   const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -14,7 +15,10 @@ function getBaseUrl(req: Parameters<GetServerSideProps>[0]["req"]) {
 
 export const getServerSideProps: GetServerSideProps = async ({ res, req }) => {
   const baseUrl = getBaseUrl(req);
-  const urls = PATHS.map((p) => `  <url><loc>${baseUrl}${p}</loc></url>`).join("\n");
+  const coursePaths = courses.map((c) => `/training/${c.slug}`);
+  const urls = [...PATHS, ...coursePaths]
+    .map((p) => `  <url><loc>${baseUrl}${p}</loc></url>`)
+    .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 

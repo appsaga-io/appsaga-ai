@@ -76,6 +76,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link className="text-muted hover:text-fg" href="/training">
+                    Training
+                  </Link>
+                </li>
+                <li>
                   <Link className="text-muted hover:text-fg" href="/blog">
                     Blog
                   </Link>
