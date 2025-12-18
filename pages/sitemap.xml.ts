@@ -1,7 +1,8 @@
 import type { GetServerSideProps } from "next";
 import { courses } from "@/lib/training";
+import { products } from "@/lib/products";
 
-const PATHS = ["/", "/about", "/training", "/contact", "/blog", "/privacy", "/terms"];
+const PATHS = ["/", "/about", "/products", "/training", "/contact", "/blog", "/privacy", "/terms"];
 
 function getBaseUrl(req: Parameters<GetServerSideProps>[0]["req"]) {
   const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -16,7 +17,9 @@ function getBaseUrl(req: Parameters<GetServerSideProps>[0]["req"]) {
 export const getServerSideProps: GetServerSideProps = async ({ res, req }) => {
   const baseUrl = getBaseUrl(req);
   const coursePaths = courses.map((c) => `/training/${c.slug}`);
+  const productPaths = products.map((p) => `/products/${p.slug}`);
   const urls = [...PATHS, ...coursePaths]
+    .concat(productPaths)
     .map((p) => `  <url><loc>${baseUrl}${p}</loc></url>`)
     .join("\n");
 

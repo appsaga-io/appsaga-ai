@@ -87,16 +87,16 @@ export function FeatureGrid() {
           align="center"
         />
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid auto-rows-fr items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
-            <Card key={f.title} className="group">
-              <div className="flex items-start gap-4">
+            <Card key={f.title} className="group h-full">
+              <div className="flex h-full items-start gap-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-card/60 text-muted transition group-hover:border-primary/40 group-hover:bg-card group-hover:text-primary">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     {f.icon}
                   </svg>
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-base font-semibold text-fg">{f.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{f.desc}</p>
                 </div>

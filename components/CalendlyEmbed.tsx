@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
 
-export function CalendlyEmbed({ className }: { className?: string }) {
+export function CalendlyEmbed({
+  className,
+  iframeClassName,
+}: {
+  className?: string;
+  iframeClassName?: string;
+}) {
   const url =
     process.env.NEXT_PUBLIC_CALENDLY_URL ||
     "https://calendly.com/office-appsaga/30min?hide_gdpr_banner=1";
@@ -10,7 +16,7 @@ export function CalendlyEmbed({ className }: { className?: string }) {
       <iframe
         title="Book a call"
         src={url}
-        className="h-[720px] w-full"
+        className={cn("w-full", iframeClassName ?? "h-[720px]")}
         loading="lazy"
       />
     </div>

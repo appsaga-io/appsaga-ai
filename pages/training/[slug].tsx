@@ -60,7 +60,6 @@ export default function CoursePage({ slug }: Props) {
                 height={14}
                 className="h-3.5 w-auto object-contain drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]"
               />
-              <span className="sr-only">AICPE</span>
             </Badge>
             <Badge>Verified AICTE Institute</Badge>
             <Badge>Certificate Included</Badge>

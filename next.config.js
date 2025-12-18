@@ -5,6 +5,16 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  webpack: (config, { dev }) => {
+    // When multiple dev servers/debuggers accidentally run at the same time,
+    // webpack's persistent cache can corrupt .next (leading to missing chunks like:
+    // "Cannot find module './chunks/vendor-chunks/next.js'").
+    // We disable the persistent cache only when explicitly requested.
+    if (dev && process.env.NEXT_DISABLE_WEBPACK_CACHE === "1") {
+      config.cache = false;
+    }
+    return config;
+  },
   async redirects() {
     return [
       {

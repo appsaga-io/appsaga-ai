@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:debug": "node scripts/dev-debug.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "clean:next": "node scripts/clean-next.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.4",
