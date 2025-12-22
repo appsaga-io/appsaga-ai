@@ -17,3 +17,4 @@ const removed = rmSafe(nextDir);
 process.stdout.write(removed ? "Removed .next\n" : "No .next to remove (or failed)\n");
 
 
+
