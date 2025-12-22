@@ -12,12 +12,16 @@
     "clean:next": "node scripts/clean-next.js"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "@sendgrid/mail": "^8.1.4",
+    "@types/ws": "^8.18.1",
+    "dotenv": "^17.2.3",
     "next": "14.2.35",
     "pg": "^8.16.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "stripe": "^17.5.0"
+    "stripe": "^17.5.0",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

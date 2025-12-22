@@ -1,19 +1,25 @@
-
 import { courses } from '../lib/training';
 import { Pool } from 'pg';
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+// Load .env.local manually since we are running a script
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 if (!process.env.DATABASE_URL) {
-    console.error("DATABASE_URL is not set");
-    process.exit(1);
+  console.error("DATABASE_URL is not set");
+  process.exit(1);
 }
 
+const isLocal = process.env.DATABASE_URL.includes('localhost') || process.env.DATABASE_URL.includes('127.0.0.1');
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+  connectionString: process.env.DATABASE_URL,
+  ssl: isLocal ? false : { rejectUnauthorized: false },
 });
 
 async function seed() {
-    await pool.query(`
+  await pool.query(`
     create table if not exists courses (
       id bigserial primary key,
       slug text not null unique,
@@ -40,10 +46,10 @@ async function seed() {
     );
   `);
 
-    for (const c of courses) {
-        console.log(`Seeding ${c.title}...`);
-        await pool.query(
-            `
+  for (const c of courses) {
+    console.log(`Seeding ${c.title}...`);
+    await pool.query(
+      `
       INSERT INTO courses (
         slug, title, description_short, description_long,
         course_code, award, duration, mode, level, prerequisites,
@@ -74,36 +80,36 @@ async function seed() {
         details = EXCLUDED.details,
         updated_at = now();
       `,
-            [
-                c.slug,
-                c.title,
-                c.descriptionShort,
-                c.descriptionLong,
-                c.courseCode || null,
-                c.award || null,
-                c.duration,
-                c.mode,
-                c.level,
-                c.prerequisites,
-                c.totalFees || null,
-                c.eligibility || null,
-                JSON.stringify(c.benefits),
-                JSON.stringify(c.includes),
-                JSON.stringify(c.outcomes),
-                c.certification,
-                JSON.stringify(c.curriculum),
-                JSON.stringify(c.stack || []),
-                JSON.stringify(c.details || []),
-            ]
-        );
-    }
+      [
+        c.slug,
+        c.title,
+        c.descriptionShort,
+        c.descriptionLong,
+        c.courseCode || null,
+        c.award || null,
+        c.duration,
+        c.mode,
+        c.level,
+        c.prerequisites,
+        c.totalFees || null,
+        c.eligibility || null,
+        JSON.stringify(c.benefits),
+        JSON.stringify(c.includes),
+        JSON.stringify(c.outcomes),
+        c.certification,
+        JSON.stringify(c.curriculum),
+        JSON.stringify(c.stack || []),
+        JSON.stringify(c.details || []),
+      ]
+    );
+  }
 
-    console.log('Seeding complete.');
-    pool.end();
+  console.log('Seeding complete.');
+  pool.end();
 }
 
 seed().catch(e => {
-    console.error(e);
-    pool.end();
-    process.exit(1);
+  console.error(e);
+  pool.end();
+  process.exit(1);
 });
