@@ -20,6 +20,31 @@ create table if not exists newsletter_subscribers (
   created_at timestamptz not null default now()
 );
 
+create table if not exists courses (
+  id bigserial primary key,
+  slug text not null unique,
+  title text not null,
+  description_short text,
+  description_long text,
+  course_code text,
+  award text,
+  duration text,
+  mode text,
+  level text,
+  prerequisites text,
+  total_fees text,
+  eligibility text,
+  benefits jsonb not null default '[]',
+  includes_list jsonb not null default '[]',
+  outcomes jsonb not null default '[]',
+  certification text,
+  curriculum jsonb not null default '[]',
+  stack jsonb not null default '[]',
+  details jsonb not null default '[]',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 
 
 

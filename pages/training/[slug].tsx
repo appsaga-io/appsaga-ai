@@ -1,3 +1,4 @@
+
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/Badge";
@@ -6,27 +7,36 @@ import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Seo } from "@/components/Seo";
-import { courses, getCourseBySlug } from "@/lib/training";
+import { Course, getAllCourses, getCourseBySlug } from "@/lib/training";
 import Image from "next/image";
 
 type Props = {
-  slug: string;
+  course: Course;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const courses = await getAllCourses();
   return {
     paths: courses.map((c) => ({ params: { slug: c.slug } })),
-    fallback: false,
+    fallback: "blocking", // Allow new courses to be generated on demand
   };
 };
 
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
   const slug = String(ctx.params?.slug || "");
-  return { props: { slug } };
+  const course = await getCourseBySlug(slug);
+
+  if (!course) {
+    return { notFound: true };
+  }
+
+  return {
+    props: { course },
+    revalidate: 60, // Revalidate every minute
+  };
 };
 
-export default function CoursePage({ slug }: Props) {
-  const course = getCourseBySlug(slug);
+export default function CoursePage({ course }: Props) {
   if (!course) return null;
 
   const stack = course.stack ?? [];
