@@ -8,12 +8,14 @@ export function SectionHeading({
   description,
   align = "left",
   className,
+  as: Component = "h2",
 }: {
   eyebrow?: string;
   title: ReactNode;
   description?: ReactNode;
   align?: "left" | "center";
   className?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }) {
   return (
     <Reveal>
@@ -23,9 +25,10 @@ export function SectionHeading({
             {eyebrow}
           </div>
         ) : null}
-        <h2 className="mt-3 text-2xl font-semibold leading-tight text-fg sm:text-3xl">
+        <Component className="mt-3 text-2xl font-semibold leading-tight text-fg sm:text-3xl">
           {title}
-        </h2>
+        </Component>
+
         {description ? (
           <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
             {description}

@@ -8,6 +8,7 @@ export const siteConfig = {
   social: {
     twitter: "https://twitter.com/",
   },
+  googleSiteVerification: "", // Add your verification code here
 };
 
 export type NavItem = { label: string; href: string };

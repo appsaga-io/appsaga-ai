@@ -10,7 +10,20 @@ import { TrustedBy } from "@/components/TrustedBy";
 export default function HomePage() {
   return (
     <>
-      <Seo title="Home" path="/" />
+      <Seo
+        title="Home"
+        path="/"
+        keywords={["AI development agency", "MVP development", "web app development", "startup MVP", "rapid prototyping"]}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "AppSaga Solutions",
+          url: "https://appsaga.ai",
+          logo: "https://appsaga.ai/logo-wordmark.png",
+          sameAs: ["https://twitter.com/appsaga"],
+          description: "AI-powered IT agency helping founders build and ship modern web apps in 2-3 weeks.",
+        }}
+      />
 
       <section className="relative overflow-hidden">
         <Container className="py-20 sm:py-28">

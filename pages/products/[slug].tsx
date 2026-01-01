@@ -32,6 +32,25 @@ export default function ProductPage({ slug }: Props) {
         title={product.name}
         path={`/products/${product.slug}`}
         description={product.description}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: product.name,
+          operatingSystem: "Web",
+          applicationCategory: "BusinessApplication",
+          description: product.description,
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "INR",
+            availability: "https://schema.org/InStock",
+          },
+          author: {
+            "@type": "Organization",
+            name: "AppSaga Solutions",
+            url: "https://appsaga.ai",
+          },
+        }}
       />
 
       <section className="py-20">
@@ -43,6 +62,7 @@ export default function ProductPage({ slug }: Props) {
           </div>
 
           <SectionHeading
+            as="h1"
             eyebrow={product.status === "coming_soon" ? "Coming soon" : "Product"}
             title={
               <span className="flex flex-wrap items-center gap-x-2 gap-y-1">

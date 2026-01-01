@@ -31,6 +31,7 @@ export type Course = {
   outcomes: string[];
   certification: string;
   curriculum: CourseModule[];
+  keywords: string[];
 };
 
 
@@ -68,6 +69,7 @@ export const courses: Course[] = [
       "Understand ethical and responsible AI usage",
     ],
     certification: "AI 360 – Generative AI & ChatGPT Essentials (1‑Month Professional Certification)",
+    keywords: ["AI course", "Generative AI certification", "ChatGPT training", "Prompt Engineering course", "AI for beginners", "Artificial Intelligence certification"],
     curriculum: [
       {
         title: "Module 1: Introduction to AI & Generative AI",
@@ -259,6 +261,7 @@ export const courses: Course[] = [
       "Handle exceptions and debug common PHP/MySQL errors",
     ],
     certification: "PHP AND MYSQL (Certificate)",
+    keywords: ["PHP course", "MySQL training", "Web development course", "PHP programming", "Database management course", "Backend development"],
     curriculum: [
       {
         title: "Module 1: Introduction to PHP",
@@ -365,6 +368,7 @@ export const courses: Course[] = [
     includes: ["Practical Labs", "Real-world Projects", "Professional Certificate"],
     outcomes: ["Build REST APIs", "Connect databases (MongoDB)", "Handle authentication", "Deploy Node.js apps"],
     certification: "NODE.JS FULL COURSE (Professional Certificate)",
+    keywords: ["Node.js course", "Express.js training", "MongoDB certification", "MERN stack course", "Backend development course", "REST API development"],
     curriculum: [
       {
         title: "Module 1: Introduction to Backend & Node.js",
@@ -504,6 +508,7 @@ export const courses: Course[] = [
       "Dynamic content with PHP"
     ],
     certification: "WEB DESIGNING (Certificate)",
+    keywords: ["Web designing course", "HTML5 CSS3 training", "Website design certification", "Frontend design course", "Responsive web design"],
     curriculum: [
       {
         title: "Module 1: HTML5",
@@ -573,6 +578,7 @@ export const courses: Course[] = [
       "Incorporate multimedia"
     ],
     certification: "HTML AND CSS (Certificate)",
+    keywords: ["HTML CSS course", "Web development basics", "Frontend development course", "HTML5 training", "CSS3 certification"],
     curriculum: [
       {
         title: "Module 1: Introduction to HTML",
@@ -625,6 +631,7 @@ export const courses: Course[] = [
       "Understand MVC architecture"
     ],
     certification: "PROFESSIONAL WEB DEVELOPER (Certificate)",
+    keywords: ["Professional web development course", "Full stack web developer", "WordPress training", "Python for web", "PHP MySQL course"],
     curriculum: [
       { title: "Module 1: HTML5", bullets: ["Introduction", "Semantic Elements", "Forms", "Audio/Video", "Canvas/SVG", "Geolocation", "Web Workers"] },
       { title: "Module 2: CSS3", bullets: ["Selectors", "Box Model", "Transitions/Animations", "Flexbox/Grid", "Bootstrap", "Responsive Design"] },
@@ -667,6 +674,7 @@ export const courses: Course[] = [
       "Master Frontend & Backend"
     ],
     certification: "FULL STACK WEB DEVELOPER (Diploma)",
+    keywords: ["Full stack diploma", "Web development diploma", "PHP MongoDB course", "Frontend Backend training", "Cloud computing basics"],
     curriculum: [
       { title: "1. HTML (4 Weeks)", bullets: ["Basics", "Forms", "Media", "Tables", "Div/Class/ID"] },
       { title: "2. CSS (5 Weeks)", bullets: ["Selectors", "Box Model", "Positioning", "Flexbox", "Responsive Design"] },
@@ -706,6 +714,7 @@ export const courses: Course[] = [
       "Understand MVC & Architecture"
     ],
     certification: "FULL STACK WEB DEVELOPMENT (Professional Certificate)",
+    keywords: ["Full stack professional course", "MERN stack certification", "React Node.js course", "Job-ready web dev course", "Advanced web development"],
     curriculum: [
       { title: "PHASE 1: Foundations", bullets: ["Internet Basics", "Tools Setup"] },
       { title: "PHASE 2: Frontend", bullets: ["HTML Structure", "CSS Styling", "Bootstrap UI", "JS Core", "JS DOM"] },
@@ -746,6 +755,7 @@ function mapRowToCourse(row: any): Course {
     outcomes: row.outcomes,
     certification: row.certification,
     curriculum: row.curriculum,
+    keywords: row.keywords || [],
   };
 }
 

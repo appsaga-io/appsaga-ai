@@ -68,6 +68,28 @@ export default function ContactPage() {
         title="Contact"
         path="/contact"
         description="Contact AppSaga Solutions to build an AI-powered MVP in 2–3 weeks. Book a call or send your requirements."
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "AppSaga Solutions",
+          image: "https://appsaga.ai/og.svg",
+          "@id": "https://appsaga.ai",
+          url: "https://appsaga.ai",
+          telephone: "",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Shop 412, Apple Business Center, Canal Rd",
+            addressLocality: "Kamrej, Surat",
+            addressRegion: "Gujarat",
+            postalCode: "394180",
+            addressCountry: "IN",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 21.2686749,
+            longitude: 72.9765104,
+          },
+        }}
       />
 
       <section className="py-20">
@@ -77,6 +99,7 @@ export default function ContactPage() {
             <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
               <div className="flex flex-col">
                 <SectionHeading
+                  as="h1"
                   eyebrow="Contact"
                   title="Talk to our team"
                   description="Send a note or book a call. We’ll reply with timeline, scope, and a clear plan to ship your MVP fast."
