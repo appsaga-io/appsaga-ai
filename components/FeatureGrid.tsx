@@ -78,7 +78,7 @@ const features = [
 
 export function FeatureGrid() {
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <Container>
         <SectionHeading
           eyebrow="Why us"

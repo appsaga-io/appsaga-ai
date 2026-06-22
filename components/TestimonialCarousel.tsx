@@ -16,7 +16,7 @@ export function TestimonialCarousel() {
   const current = items[index];
 
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <Container>
         <SectionHeading
           eyebrow="Testimonials"

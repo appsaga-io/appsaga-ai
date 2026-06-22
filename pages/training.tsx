@@ -32,7 +32,7 @@ export default function TrainingPage({ courses }: Props) {
         description="AI training programs by AppSaga Solutions. Verified AICTE institute with certification."
       />
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <SectionHeading
             eyebrow="Training"

@@ -5,9 +5,9 @@ export default function PrivacyPage() {
   return (
     <>
       <Seo title="Privacy Policy" path="/privacy" />
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
-          <h1 className="text-3xl font-semibold">Privacy Policy</h1>
+          <h1 className="text-2xl font-semibold sm:text-3xl">Privacy Policy</h1>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
             This is a starter privacy policy page for the website. Replace this with your
             official policy before production use.

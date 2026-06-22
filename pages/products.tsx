@@ -1,10 +1,37 @@
+import { motion } from "framer-motion";
 import { ButtonLink } from "@/components/Button";
-import { Badge } from "@/components/Badge";
-import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
+import { ProductCard } from "@/components/landing/ProductCard";
 import { SectionHeading } from "@/components/SectionHeading";
+import { LandingCard } from "@/components/landing/LandingCard";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { Seo } from "@/components/Seo";
+import { defaultTransition, scaleIn, usePrefersReducedMotion } from "@/lib/motion";
 import { products } from "@/lib/products";
+
+function AnimatedProductCard({
+  product,
+  index,
+}: {
+  product: (typeof products)[number];
+  index: number;
+}) {
+  const reduced = usePrefersReducedMotion();
+
+  return (
+    <motion.div
+      initial={reduced ? false : "hidden"}
+      whileInView="visible"
+      viewport={{ once: true, margin: "-40px" }}
+      variants={scaleIn}
+      transition={{ ...defaultTransition, delay: index * 0.08 }}
+      className="h-full"
+    >
+      <ProductCard product={product} variant="listing" />
+    </motion.div>
+  );
+}
 
 export default function ProductsPage() {
   return (
@@ -12,60 +39,43 @@ export default function ProductsPage() {
       <Seo
         title="Products"
         path="/products"
-        description="In-house products by AppSaga Solutions—built to solve real workflows with speed and quality."
+        description="LeadSaga, Clinic Saga, and SnapFlow AI — in-house products by AppSaga Solutions, launching soon."
       />
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
-          <SectionHeading
-            eyebrow="Products"
-            title="In-house products built by AppSaga"
-            description="We build internal tools and commercial products—designed for reliability, speed, and real users."
-          />
+          <ScrollReveal>
+            <SectionHeading
+              eyebrow="Products"
+              title="Products launching soon"
+              description="In-house products we're building alongside client work — LeadSaga, Clinic Saga, and SnapFlow AI."
+            />
+          </ScrollReveal>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
-            {products.map((p) => (
-              <Card key={p.slug} className="relative overflow-hidden">
-                <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-xs font-semibold uppercase tracking-widest text-muted">Product</div>
-                  {p.status === "coming_soon" ? (
-                    <Badge className="border-primary/30 bg-primary/10 text-primary">Coming soon</Badge>
-                  ) : null}
-                </div>
-                <h2 className="mt-3 text-xl font-semibold sm:text-2xl">{p.name}</h2>
-                <div className="mt-1 text-sm font-semibold text-muted">{p.tagline}</div>
-                <p className="mt-3 text-sm leading-relaxed text-muted">{p.description}</p>
-
-                <div className="mt-5">
-                  <div className="text-xs font-semibold uppercase tracking-widest text-muted">
-                    Highlights
-                  </div>
-                  <ul className="mt-2 grid gap-2 text-sm text-muted">
-                    {p.highlights.slice(0, 4).map((h) => (
-                      <li key={h} className="flex items-start gap-2">
-                        <span className="mt-1 h-2 w-2 rounded-full bg-primary/40" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <ButtonLink href={`/products/${p.slug}`} variant="primary" size="md">
-                    View product
-                  </ButtonLink>
-                  <ButtonLink href="/contact" variant="secondary" size="md">
-                    Request demo
-                  </ButtonLink>
-                </div>
-              </Card>
+          <StaggerChildren className="mt-10 grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {products.map((product, index) => (
+              <StaggerItem key={product.slug}>
+                <AnimatedProductCard product={product} index={index} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerChildren>
+
+          <ScrollReveal delay={0.1}>
+            <LandingCard interactive className="mt-14 p-8 text-center">
+              <h2 className="text-xl font-semibold text-fg">Want early access?</h2>
+              <p className="mx-auto mt-3 max-w-lg text-sm text-muted">
+                We&apos;re launching these products soon. Get in touch if you&apos;d like to try them
+                early or need something similar built for your team.
+              </p>
+              <div className="mt-6">
+                <ButtonLink href="/contact" variant="primary" size="md">
+                  Request early access
+                </ButtonLink>
+              </div>
+            </LandingCard>
+          </ScrollReveal>
         </Container>
       </section>
     </>
   );
 }
-
-

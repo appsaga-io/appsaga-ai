@@ -43,9 +43,28 @@ create table if not exists courses (
   details jsonb not null default '[]',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
+);create table if not exists employees (
+  id bigserial primary key,
+  email text not null unique,
+  password_hash text not null,
+  name text not null,
+  created_at timestamptz not null default now()
 );
 
+create table if not exists tasks (
+  id bigserial primary key,
+  employee_id bigint references employees(id) on delete cascade,
+  title text not null,
+  status text not null default 'pending',
+  created_at timestamptz not null default now()
+);
 
-
-
+create table if not exists leaves (
+  id bigserial primary key,
+  employee_id bigint references employees(id) on delete cascade,
+  leave_date date not null,
+  reason text,
+  status text not null default 'pending',
+  created_at timestamptz not null default now()
+);
 

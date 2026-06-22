@@ -142,9 +142,9 @@ export default function CoursePage({ course }: Props) {
       />
 
       {/* ------------------------------- HEADER ------------------------------- */}
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
-          <Link href="/training" className="text-sm font-semibold text-primary">
+          <Link href="/training" className="hover-link-primary text-sm font-semibold">
             ← Back to training
           </Link>
 
@@ -222,7 +222,7 @@ export default function CoursePage({ course }: Props) {
       </section>
 
       {/* ------------------------------ CURRICULUM ----------------------------- */}
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <SectionHeading
             eyebrow="Curriculum"

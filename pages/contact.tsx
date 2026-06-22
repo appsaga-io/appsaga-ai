@@ -6,6 +6,7 @@ import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Seo } from "@/components/Seo";
+import { inputClassName, selectClassName, textareaClassName } from "@/lib/form";
 
 type ContactPayload = {
   name: string;
@@ -30,17 +31,17 @@ export default function ContactPage() {
     name: "",
     email: "",
     company: "",
-    interest: "Demo",
+    interest: "MVP in 2–3 weeks",
     message: "",
     website: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState<string>("");
+  const [statusMessage, setStatusMessage] = useState<string>("");
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setStatus("loading");
-    setMessage("");
+    setStatusMessage("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -50,15 +51,15 @@ export default function ContactPage() {
       const data = (await res.json()) as ContactResponse;
       if (!res.ok || !data.ok) {
         setStatus("error");
-        setMessage(!data.ok ? data.error : "Something went wrong.");
+        setStatusMessage(!data.ok ? data.error : "Something went wrong.");
         return;
       }
       setStatus("success");
-      setMessage("Thanks — we’ll get back to you shortly.");
-      setForm({ name: "", email: "", company: "", interest: "Demo", message: "" });
+      setStatusMessage("Thanks — we’ll get back to you shortly.");
+      setForm({ name: "", email: "", company: "", interest: "MVP in 2–3 weeks", message: "" });
     } catch {
       setStatus("error");
-      setMessage("Something went wrong.");
+      setStatusMessage("Something went wrong.");
     }
   }
 
@@ -92,9 +93,9 @@ export default function ContactPage() {
         }}
       />
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
-          <div className="grid gap-14">
+          <div className="grid items-start gap-14">
             {/* Row 1: consistent 2-column grid */}
             <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
               <div className="flex flex-col">
@@ -105,8 +106,8 @@ export default function ContactPage() {
                   description="Send a note or book a call. We’ll reply with timeline, scope, and a clear plan to ship your MVP fast."
                 />
 
-                <Card className="mt-8 flex flex-col lg:h-[720px]">
-                  <form onSubmit={onSubmit} className="grid flex-1 gap-4 overflow-auto">
+                <Card className="mt-8">
+                  <form onSubmit={onSubmit} className="grid gap-4">
                     {/* Honeypot: bots will often fill this. Humans never see it. */}
                     <div className="hidden" aria-hidden="true">
                       <label htmlFor="website">Website</label>
@@ -128,7 +129,7 @@ export default function ContactPage() {
                           required
                           value={form.name}
                           onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                          className="mt-2 h-11 w-full rounded-2xl border border-border/70 bg-bg px-4 text-sm text-fg placeholder:text-muted/70 focus:border-ring focus:outline-none"
+                          className={inputClassName}
                           placeholder="Your name"
                         />
                       </div>
@@ -144,7 +145,7 @@ export default function ContactPage() {
                           required
                           value={form.email}
                           onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                          className="mt-2 h-11 w-full rounded-2xl border border-border/70 bg-bg px-4 text-sm text-fg placeholder:text-muted/70 focus:border-ring focus:outline-none"
+                          className={inputClassName}
                           placeholder="you@company.com"
                         />
                       </div>
@@ -159,7 +160,7 @@ export default function ContactPage() {
                           id="company"
                           value={form.company || ""}
                           onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))}
-                          className="mt-2 h-11 w-full rounded-2xl border border-border/70 bg-bg px-4 text-sm text-fg placeholder:text-muted/70 focus:border-ring focus:outline-none"
+                          className={inputClassName}
                           placeholder="Company"
                         />
                       </div>
@@ -170,9 +171,9 @@ export default function ContactPage() {
                         </label>
                         <select
                           id="interest"
-                          value={form.interest || "Demo"}
+                          value={form.interest || "MVP in 2–3 weeks"}
                           onChange={(e) => setForm((p) => ({ ...p, interest: e.target.value }))}
-                          className="mt-2 h-11 w-full rounded-2xl border border-border/70 bg-bg px-4 text-sm text-fg focus:border-ring focus:outline-none"
+                          className={selectClassName}
                         >
                           {interests.map((i) => (
                             <option key={i} value={i}>
@@ -192,7 +193,7 @@ export default function ContactPage() {
                         required
                         value={form.message}
                         onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
-                        className="mt-2 min-h-[140px] w-full resize-y rounded-2xl border border-border/70 bg-bg px-4 py-3 text-sm text-fg placeholder:text-muted/70 focus:border-ring focus:outline-none"
+                        className={textareaClassName}
                         placeholder="Tell us what you’re trying to build…"
                       />
                     </div>
@@ -203,7 +204,7 @@ export default function ContactPage() {
                       </Button>
                       <p className="text-xs text-muted">
                         By submitting, you agree to our{" "}
-                        <Link className="underline underline-offset-4 hover:text-fg" href="/privacy">
+                        <Link className="hover-link underline underline-offset-4" href="/privacy">
                           privacy policy
                         </Link>
                         .
@@ -211,13 +212,13 @@ export default function ContactPage() {
                     </div>
 
                     <div aria-live="polite" className="min-h-[1.25rem]">
-                      {message ? (
+                      {statusMessage ? (
                         <p
                           className={
                             status === "error" ? "text-sm text-red-600 dark:text-red-200" : "text-sm text-primary"
                           }
                         >
-                          {message}
+                          {statusMessage}
                         </p>
                       ) : null}
                     </div>
@@ -232,33 +233,33 @@ export default function ContactPage() {
                   description="Pick a 30‑minute slot that works for you — we’ll discuss scope, timeline, and next steps."
                 />
                 <div className="mt-8">
-                  <CalendlyEmbed className="lg:h-[720px]" iframeClassName="h-full" />
+                  <CalendlyEmbed />
                 </div>
               </div>
             </div>
 
             {/* Row 2: full-width map */}
-            <div>
+            <div className="min-h-0">
               <SectionHeading
                 eyebrow="Location"
                 title="Visit our office"
                 description={officeAddress}
               />
-              <Card className="mt-6 overflow-hidden p-0">
+              <div className="mt-6 overflow-hidden rounded-[1.75rem] border border-border/70 bg-card/70 shadow-[0_0_0_1px_rgba(0,0,0,0.04)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.03)]">
                 <iframe
                   title="AppSaga Solutions location map"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="h-[420px] w-full"
+                  className="block h-[260px] w-full sm:h-[420px]"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(officeLatLng)}&z=16&output=embed`}
                 />
-              </Card>
+              </div>
               <div className="mt-3">
                 <Link
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(officeLatLng)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-semibold text-primary hover:opacity-90"
+                  className="hover-link-primary text-sm font-semibold"
                 >
                   Open in Google Maps →
                 </Link>

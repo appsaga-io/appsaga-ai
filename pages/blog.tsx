@@ -29,7 +29,7 @@ export default function BlogPage() {
   return (
     <>
       <Seo title="Blog" path="/blog" description="Updates and insights from the AppSaga Solutions team." />
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <SectionHeading
             eyebrow="Blog"
@@ -46,7 +46,7 @@ export default function BlogPage() {
                 <h2 className="mt-3 text-lg font-semibold leading-snug">{p.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{p.excerpt}</p>
                 <div className="mt-5">
-                  <Link className="text-sm font-semibold text-primary hover:opacity-90" href="/contact">
+                  <Link className="hover-link-primary text-sm font-semibold" href="/contact">
                     Talk to us about your MVP →
                   </Link>
                 </div>

@@ -18,6 +18,8 @@ export default {
         primary: "rgb(var(--primary) / <alpha-value>)",
         primaryFg: "rgb(var(--primary-fg) / <alpha-value>)",
         ring: "rgb(var(--ring) / <alpha-value>)",
+        cta: "rgb(var(--cta) / <alpha-value>)",
+        ctaFg: "rgb(var(--cta-fg) / <alpha-value>)",
         ink: {
           950: "#070A12",
           900: "#0B1020",
@@ -42,6 +44,12 @@ export default {
       },
       animation: {
         floaty: "floaty 6s ease-in-out infinite",
+      },
+      transitionDuration: {
+        interactive: "300ms",
+      },
+      transitionTimingFunction: {
+        interactive: "cubic-bezier(0.2, 0.9, 0.2, 1)",
       },
     },
   },

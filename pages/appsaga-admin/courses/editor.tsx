@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { AdminLayout } from '@/components/AdminLayout';
 import { Container } from '@/components/Container';
 import { SectionHeading } from '@/components/SectionHeading';
 import { Button } from '@/components/Button';
 import Link from 'next/link';
+import type { NextPageWithLayout } from '@/types/next-page';
 
 // Helper to handle JSON fields
 function JsonField({ label, value, onChange, placeholder }: { label: string, value: any, onChange: (val: any) => void, placeholder?: string }) {
@@ -33,7 +35,7 @@ function JsonField({ label, value, onChange, placeholder }: { label: string, val
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">{label}</label>
             <textarea
-                className={`w-full h-40 p-3 rounded-lg border bg-white ${error ? 'border-red-500' : 'border-border/70'} font-mono text-xs`}
+                className={`w-full h-40 p-3 rounded-lg border bg-bg text-fg ${error ? 'border-red-500' : 'border-border/70'} font-mono text-xs`}
                 value={text}
                 onChange={handleChange}
                 placeholder={placeholder}
@@ -48,7 +50,7 @@ function Input({ label, ...props }: React.InputHTMLAttributes<HTMLInputElement> 
     return (
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">{label}</label>
-            <input className="w-full p-2 border border-border/70 rounded-lg bg-white" {...props} />
+            <input className="w-full p-2 border border-border/70 rounded-lg bg-bg text-fg" {...props} />
         </div>
     )
 }
@@ -57,12 +59,12 @@ function TextArea({ label, ...props }: React.TextareaHTMLAttributes<HTMLTextArea
     return (
         <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">{label}</label>
-            <textarea className="w-full p-2 border border-border/70 rounded-lg bg-white h-24" {...props} />
+            <textarea className="w-full p-2 border border-border/70 rounded-lg bg-bg text-fg h-24" {...props} />
         </div>
     )
 }
 
-export default function CourseEditor() {
+function CourseEditor() {
     const router = useRouter();
     const { id } = router.query;
     const isEdit = Boolean(id);
@@ -161,7 +163,7 @@ export default function CourseEditor() {
             <Head>
                 <title>{isEdit ? `Edit ${formData.title}` : 'New Course'} | Admin</title>
             </Head>
-            <section className="py-20 bg-bg">
+            <section className="py-12 sm:py-20 bg-bg">
                 <Container>
                     <div className="mb-8">
                         <Link href="/appsaga-admin/courses" className="text-sm text-primary hover:underline">← Back to Courses</Link>
@@ -174,7 +176,7 @@ export default function CourseEditor() {
 
                     {error && <div className="my-6 p-4 bg-red-50 text-red-600 rounded-lg">{error}</div>}
 
-                    <form onSubmit={handleSubmit} className="mt-10 grid gap-8 max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-border/70 shadow-sm">
+                    <form onSubmit={handleSubmit} className="mx-auto mt-10 grid max-w-4xl gap-8 rounded-2xl border border-border/70 bg-white p-4 shadow-sm sm:p-8">
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <Input label="Slug (URL)" value={formData.slug || ''} onChange={e => handleChange('slug', e.target.value)} required placeholder="e.g. ai-360" />
@@ -204,13 +206,13 @@ export default function CourseEditor() {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 pt-6 border-t border-border/70">
-                            <Button type="submit" variant="primary" size="lg" disabled={loading}>
+                        <div className="flex flex-col gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center">
+                            <Button type="submit" variant="primary" size="lg" disabled={loading} className="w-full sm:w-auto">
                                 {loading ? 'Saving...' : 'Save Course'}
                             </Button>
 
                             {isEdit && (
-                                <button type="button" onClick={handleDelete} className="text-red-600 hover:text-red-700 text-sm font-medium ml-auto" disabled={loading}>
+                                <button type="button" onClick={handleDelete} className="text-sm font-medium text-red-600 hover:text-red-700 sm:ml-auto" disabled={loading}>
                                     Delete Course
                                 </button>
                             )}
@@ -221,3 +223,9 @@ export default function CourseEditor() {
         </>
     );
 }
+
+const Page: NextPageWithLayout = CourseEditor;
+
+Page.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+
+export default Page;

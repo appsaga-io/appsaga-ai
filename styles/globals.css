@@ -7,12 +7,15 @@
   --bg: 255 255 255; /* white */
   --fg: 24 24 27; /* zinc-900 */
   --card: 255 255 255;
-  --muted: 82 82 91; /* zinc-600 */
+  --muted: 63 63 70; /* zinc-700 — darker for better contrast */
   --border: 228 228 231; /* zinc-200 */
   /* Brand accent (matches logo gradient start) */
   --primary: 14 165 233; /* #0EA5E9 */
   --primary-fg: 255 255 255;
   --ring: 34 193 241; /* #22C1F1 */
+  /* CTA accent (orange — high-visibility call-to-action) */
+  --cta: 249 115 22; /* #F97316 */
+  --cta-fg: 255 255 255;
 
   /* Logo gradient stops (used for buttons / highlights) */
   --brand-from: 14 165 233; /* #0EA5E9 */
@@ -38,9 +41,27 @@
   color-scheme: dark;
 }
 
+/* Force light theme tokens inside auth surfaces regardless of html.dark */
+.light {
+  --bg: 255 255 255;
+  --fg: 24 24 27;
+  --card: 255 255 255;
+  --muted: 82 82 91;
+  --border: 228 228 231;
+  --primary: 14 165 233;
+  --primary-fg: 255 255 255;
+  --ring: 34 193 241;
+  color-scheme: light;
+}
+
 html,
 body {
   height: 100%;
+  overflow-x: clip;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -81,6 +102,75 @@ body::before {
     background-clip: text;
     color: transparent;
   }
+
+  .chapter-tint-light {
+    @apply bg-primary/[0.03];
+  }
+
+  .chapter-tint-medium {
+    @apply bg-primary/[0.05];
+  }
+
+  .hover-lift {
+    @apply transition-all duration-interactive ease-interactive;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 scale-[1.01] shadow-soft;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 18px 60px rgba(14, 165, 233, 0.2);
+  }
+
+  .dark .hover-glow:hover {
+    box-shadow: 0 22px 70px rgba(34, 193, 241, 0.18);
+  }
+
+  .hover-border-brand {
+    @apply transition-colors duration-interactive ease-interactive;
+  }
+
+  .hover-border-brand:hover {
+    @apply border-primary/50;
+  }
+
+  .hover-link {
+    @apply relative text-muted transition-colors duration-interactive ease-interactive hover:text-fg;
+  }
+
+  .hover-link::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-0.5 w-full origin-left scale-x-0 rounded-full bg-primary transition-transform duration-interactive ease-interactive;
+  }
+
+  .hover-link:hover::after {
+    @apply scale-x-100;
+  }
+
+  .hover-row {
+    @apply transition-colors duration-interactive ease-interactive;
+  }
+
+  .hover-row:hover {
+    @apply bg-primary/[0.04];
+  }
+
+  .hover-nav-nudge {
+    @apply transition-transform duration-interactive ease-interactive;
+  }
+
+  .hover-nav-nudge:hover {
+    @apply translate-x-0.5;
+  }
+
+  .hover-input {
+    @apply transition-colors duration-200 hover:border-primary/40 hover:bg-card/50;
+  }
+
+  .hover-link-primary {
+    @apply text-primary transition-opacity duration-interactive ease-interactive hover:opacity-90;
+  }
 }
 
 /* ---------- Motion (global) ---------- */
@@ -116,7 +206,44 @@ body::before {
   filter: blur(0);
 }
 
+/* ---------- Site watermark ---------- */
+.watermark-layer {
+  position: absolute;
+  inset: -45%;
+  width: 190%;
+  height: 190%;
+  background-size: 360px 220px;
+  opacity: 0.045;
+  will-change: transform;
+}
+
+.dark .watermark-layer {
+  opacity: 0.07;
+}
+
+.watermark-layer--animated {
+  animation: watermark-drift 110s linear infinite;
+}
+
+.watermark-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgb(var(--bg) / 0.18) 100%);
+}
+
+@keyframes watermark-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-180px, -120px, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .page-enter {
     animation: none !important;
   }
@@ -126,6 +253,17 @@ body::before {
     transform: none !important;
     filter: none !important;
     transition: none !important;
+  }
+  .watermark-layer--animated {
+    animation: none !important;
+  }
+  .hover-lift:hover,
+  .hover-nav-nudge:hover {
+    transform: none !important;
+  }
+  .hover-link::after {
+    transition: none !important;
+    display: none;
   }
 }
 
@@ -165,5 +303,4 @@ body::before {
   outline: 2px solid rgb(var(--ring));
   outline-offset: 2px;
 }
-
 

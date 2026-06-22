@@ -2,8 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { siteConfig } from "@/lib/site";
+import { Button, ButtonLink } from "@/components/Button";
+import { SectionEyebrow } from "@/components/landing/SectionEyebrow";
+import {
+  contactInfo,
+  footerColumns,
+  footerMicroTagline,
+  legalLinks,
+  siteConfig,
+} from "@/lib/site";
+
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  return (
+    <div>
+      <SectionEyebrow label={title} />
+      <ul className="mt-4 space-y-2.5 text-sm">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link className="hover-link text-muted transition-colors hover:text-fg" href={link.href}>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -37,10 +61,14 @@ export function Footer() {
   }
 
   return (
-    <footer className="mt-20 bg-bg relative before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-[rgb(var(--brand-from))] before:via-[rgb(var(--brand-via))] before:to-[rgb(var(--brand-to))] before:opacity-25">
-      <Container className="py-14">
-        <div className="grid gap-10 lg:grid-cols-3">
-          <div>
+    <footer className="relative">
+      <div
+        className="h-px w-full bg-gradient-to-r from-transparent via-[rgb(var(--brand-from))]/25 to-transparent"
+        aria-hidden="true"
+      />
+      <Container className="py-14 sm:py-16">
+        <div className="grid gap-0 lg:grid-cols-[1.4fr_repeat(3,minmax(0,1fr))] lg:gap-10">
+          <div className="max-w-md border-b border-border/50 pb-12 lg:border-b-0 lg:pb-0">
             <Link href="/" className="inline-flex items-center" aria-label={`${siteConfig.shortName} home`}>
               <span className="inline-flex items-center overflow-visible">
                 <Image
@@ -48,134 +76,112 @@ export function Footer() {
                   alt={`${siteConfig.name} logo`}
                   width={190}
                   height={48}
-                  className="block dark:hidden"
+                  className="block h-9 w-auto max-w-[160px] dark:hidden sm:h-10 sm:max-w-none"
                 />
                 <Image
                   src="/logo-wordmark-light.png"
                   alt={`${siteConfig.name} logo`}
                   width={190}
                   height={48}
-                  className="hidden dark:block"
+                  className="hidden h-9 w-auto max-w-[160px] dark:block sm:h-10 sm:max-w-none"
                 />
               </span>
             </Link>
-            <p className="mt-3 max-w-sm text-sm text-muted">
-              {siteConfig.tagline}
-            </p>
-          </div>
+            <p className="mt-4 text-sm leading-relaxed text-muted">{siteConfig.description}</p>
+            <address className="mt-4 text-sm not-italic leading-relaxed text-muted">
+              <a
+                href={contactInfo.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-fg"
+              >
+                {contactInfo.address}
+              </a>
+            </address>
+            <div className="mt-6">
+              <ButtonLink href="/contact" variant="primary" size="sm" className="gap-1">
+                Book a call
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M7 17L17 7M17 7H9M17 7v8"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </ButtonLink>
+            </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-1 lg:grid-cols-2">
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-widest text-muted">
-                Product
+            <div className="mt-8 border-t border-border/50 pt-8">
+              <SectionEyebrow label="Newsletter" />
+              <p className="mt-3 text-sm text-muted">Product updates and MVP tips. No spam.</p>
+              <form className="mt-4 flex flex-col gap-3 sm:flex-row" onSubmit={onSubmit}>
+                <label className="sr-only" htmlFor="newsletter-email">
+                  Email
+                </label>
+                <input
+                  className="hidden"
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  className="hover-input h-11 w-full rounded-full border border-border/70 bg-card/60 px-4 text-sm text-fg placeholder:text-muted focus:border-primary focus:outline-none"
+                />
+                <Button type="submit" variant="secondary" disabled={status === "loading"} className="w-full shrink-0 sm:w-auto">
+                  {status === "loading" ? "…" : "Subscribe"}
+                </Button>
+              </form>
+              <div className="mt-2 min-h-[1.25rem]" aria-live="polite">
+                {message ? (
+                  <p
+                    className={
+                      status === "error" ? "text-sm text-red-600 dark:text-red-300" : "text-sm text-muted"
+                    }
+                  >
+                    {message}
+                  </p>
+                ) : null}
               </div>
-              <ul className="mt-3 space-y-2 text-sm">
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/about">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/products">
-                    Products
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/training">
-                    Training
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/blog">
-                    Blog
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-widest text-muted">
-                Legal
-              </div>
-              <ul className="mt-3 space-y-2 text-sm">
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/privacy">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/terms">
-                    Terms
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-muted hover:text-fg" href="/contact">
-                    Contact
-                  </Link>
-                </li>
-              </ul>
             </div>
           </div>
 
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-widest text-muted">
-              Newsletter
+          {footerColumns.map((column) => (
+            <div
+              key={column.title}
+              className="border-b border-border/50 py-12 last:border-b-0 lg:border-b-0 lg:border-l lg:border-border/50 lg:py-0 lg:pl-10"
+            >
+              <FooterColumn title={column.title} links={column.links} />
             </div>
-            <p className="mt-3 text-sm text-muted">
-              Get product updates, MVP tips, and launch playbooks. No spam.
-            </p>
-            <form className="mt-4 flex gap-3" onSubmit={onSubmit}>
-              <label className="sr-only" htmlFor="newsletter-email">
-                Email
-              </label>
-              {/* Honeypot */}
-              <input
-                className="hidden"
-                aria-hidden="true"
-                tabIndex={-1}
-                autoComplete="off"
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-              />
-              <input
-                id="newsletter-email"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@company.com"
-                className="h-11 w-full rounded-xl border border-border/70 bg-card/60 px-4 text-sm text-fg placeholder:text-muted focus:border-primary focus:outline-none"
-              />
-              <Button type="submit" variant="primary" disabled={status === "loading"}>
-                {status === "loading" ? "…" : "Subscribe"}
-              </Button>
-            </form>
-            <div className="mt-2 min-h-[1.25rem]" aria-live="polite">
-              {message ? (
-                <p className={status === "error" ? "text-sm text-red-600 dark:text-red-300" : "text-sm text-muted"}>
-                  {message}
-                </p>
-              ) : null}
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-border/60 pt-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <div>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</div>
-          <div className="flex gap-4">
-            <Link className="hover:text-fg" href="/privacy">
-              Privacy
-            </Link>
-            <Link className="hover:text-fg" href="/terms">
-              Terms
+        <div className="mt-14 flex flex-col gap-4 border-t border-border/50 pt-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+          <div>© {new Date().getFullYear()} {siteConfig.shortName}. All rights reserved.</div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            {legalLinks.map((link) => (
+              <Link key={link.href} className="hover-link transition-colors hover:text-fg" href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+            <Link className="hover-link transition-colors hover:text-fg" href="/contact">
+              Contact
             </Link>
           </div>
+          <p className="text-muted sm:text-right">{footerMicroTagline}</p>
         </div>
       </Container>
     </footer>
   );
 }
-
-

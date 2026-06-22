@@ -1,3 +1,4 @@
+import { ButtonLink } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Container } from "@/components/Container";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -22,44 +23,23 @@ const values = [
   },
 ];
 
-const team = [
-  { name: "Deepa K.", role: "Founder / Product" },
-  { name: "Sam T.", role: "Engineering" },
-  { name: "Riley M.", role: "Design" },
-  { name: "Noah P.", role: "Customer success" },
-];
-
-function Initials({ name }: { name: string }) {
-  const initials = name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase())
-    .join("");
-  return (
-    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border/70 bg-bg/60 text-sm font-semibold text-fg">
-      {initials}
-    </div>
-  );
-}
-
 export default function AboutPage() {
   return (
     <>
       <Seo
         title="About"
         path="/about"
-        description="Learn about our mission, values, and the team behind AppSaga Solutions."
+        description="Learn about AppSaga — a young tech partner studio building with founders and teams."
       />
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
               <SectionHeading
                 eyebrow="About"
-                title="We’re an AI-powered product studio"
-                description="AppSaga Solutions helps founders and teams design, build, and launch MVPs in 2–3 weeks."
+                title="We're a young tech partner studio"
+                description="AppSaga helps founders and teams design, build, and ship web products — as an embedded engineering partner."
               />
               <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted">
                 <p>
@@ -72,8 +52,16 @@ export default function AboutPage() {
                   regressions, and cleaner systems.
                 </p>
                 <p>
-                  Our goal is to help startups and teams launch faster and scale confidently—without
-                  over-engineering or complicated handoffs.
+                  We&apos;re early-stage and motivated — our first client partnership is with{" "}
+                  <a
+                    href="https://yaass.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover-link-primary font-semibold"
+                  >
+                    YAASS
+                  </a>
+                  , and we&apos;re also building our own products in-house.
                 </p>
               </div>
             </div>
@@ -106,7 +94,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <SectionHeading
             eyebrow="Values"
@@ -125,30 +113,18 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
           <SectionHeading
-            eyebrow="Team"
-            title="Small team, high standards"
-            description="We’re a focused group building tooling we’d use ourselves."
+            eyebrow="Get in touch"
+            title="Want to work with us?"
+            description="We're looking for founders and teams who need a hands-on technology partner. Reach out and we'll see if we're a good fit."
             align="center"
           />
-
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((m) => (
-              <Card key={m.name}>
-                <div className="flex items-center gap-4">
-                  <Initials name={m.name} />
-                  <div>
-                    <div className="text-sm font-semibold">{m.name}</div>
-                    <div className="mt-1 text-xs text-muted">{m.role}</div>
-                  </div>
-                </div>
-                <p className="mt-4 text-sm text-muted">
-                  We care deeply about UX, reliability, and shipping improvements that matter.
-                </p>
-              </Card>
-            ))}
+          <div className="mt-8 flex justify-center">
+            <ButtonLink href="/contact" variant="primary" size="md">
+              Book a call
+            </ButtonLink>
           </div>
         </Container>
       </section>

@@ -5,9 +5,9 @@ export default function TermsPage() {
   return (
     <>
       <Seo title="Terms" path="/terms" />
-      <section className="py-20">
+      <section className="py-12 sm:py-20">
         <Container>
-          <h1 className="text-3xl font-semibold">Terms of Service</h1>
+          <h1 className="text-2xl font-semibold sm:text-3xl">Terms of Service</h1>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
             This is a starter terms page for the website clone. Replace with your official terms
             before production use.

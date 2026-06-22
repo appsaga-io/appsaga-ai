@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 type Theme = "light" | "dark";
 
@@ -19,7 +20,7 @@ function applyTheme(theme: Theme) {
   window.localStorage.setItem("theme", theme);
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<Theme>("light");
 
@@ -43,10 +44,12 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-card/60 text-fg hover:bg-card"
+      className={cn(
+        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/70 bg-card/60 text-fg transition duration-interactive ease-interactive hover:bg-card/80",
+        className
+      )}
     >
       {mounted && theme === "dark" ? (
-        // Sun
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path
             d="M12 18a6 6 0 100-12 6 6 0 000 12z"
@@ -61,7 +64,6 @@ export function ThemeToggle() {
           />
         </svg>
       ) : (
-        // Moon
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path
             d="M21 13.4A8 8 0 1110.6 3a6.5 6.5 0 0010.4 10.4z"
@@ -75,5 +77,3 @@ export function ThemeToggle() {
     </button>
   );
 }
-
-

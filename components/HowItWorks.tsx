@@ -28,7 +28,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <Container>
         <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
