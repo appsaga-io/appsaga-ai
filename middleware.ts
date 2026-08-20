@@ -1,6 +1,8 @@
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { verifyJwt } from '@/lib/auth';
+
+export const runtime = 'nodejs';
 
 export function middleware(request: NextRequest) {
     // Only protect /appsaga-admin routes
@@ -11,15 +13,18 @@ export function middleware(request: NextRequest) {
             return NextResponse.next();
         }
 
-        // Check for "admin_auth" cookie
-        // In a real app, verify the token value (JWT etc). 
-        // Here we just check presence for simplicity as requested.
+        // Check for admin_auth cookie and verify the JWT
         const authCookie = request.cookies.get('admin_auth');
 
-        if (!authCookie) {
+        if (!authCookie || !authCookie.value) {
             const loginUrl = new URL('/appsaga-admin/login', request.url);
-            // Optional: Redirect back after login
-            // loginUrl.searchParams.set('from', request.nextUrl.pathname);
+            return NextResponse.redirect(loginUrl);
+        }
+
+        // Verify the JWT token
+        const payload = verifyJwt(authCookie.value);
+        if (!payload) {
+            const loginUrl = new URL('/appsaga-admin/login', request.url);
             return NextResponse.redirect(loginUrl);
         }
     }
