@@ -1,10 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import pool from '@/lib/db';
+import { verifyJwt } from '@/lib/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Check admin auth
-  const adminAuth = req.cookies.admin_auth;
-  if (adminAuth !== 'true') {
+  // Check admin auth - verify JWT
+  const token = req.cookies.admin_auth;
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized: Admin access required' });
+  }
+
+  const payload = verifyJwt(token);
+  if (!payload || payload.role !== 'admin') {
     return res.status(401).json({ error: 'Unauthorized: Admin access required' });
   }
 
