@@ -19,6 +19,7 @@ export const navItems: NavItem[] = [
   { label: "Work", href: "/case-studies" },
   { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Training", href: "/training" },
   { label: "Contact", href: "/contact" },
 ];
@@ -40,6 +41,7 @@ export const footerColumns: FooterColumn[] = [
     links: [
       { label: "About", href: "/about" },
       { label: "Work", href: "/case-studies" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Contact", href: "/contact" },
     ],
   },
