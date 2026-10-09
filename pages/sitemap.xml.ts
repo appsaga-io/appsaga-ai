@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import { courses } from "@/lib/training";
 import { products } from "@/lib/products";
 
-const PATHS = ["/", "/about", "/products", "/training", "/contact", "/blog", "/privacy", "/terms"];
+const PATHS = ["/", "/about", "/products", "/pricing", "/training", "/contact", "/blog", "/privacy", "/terms"];
 
 function getBaseUrl(req: Parameters<GetServerSideProps>[0]["req"]) {
   const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
